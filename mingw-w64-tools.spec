@@ -2,7 +2,7 @@
 
 Name:           mingw-w64-tools
 Version:        2.0.999
-Release:        0.2.trunk.%{snapshot_date}%{?dist}
+Release:        0.3.trunk.%{snapshot_date}%{?dist}
 Summary:        Supplementary tools which are part of the mingw-w64 toolchain
 
 License:        Public Domain
@@ -13,6 +13,8 @@ Source0:        http://sourceforge.net/projects/mingw-w64/files/Toolchain%20sour
 %else
 Source0:        http://downloads.sourceforge.net/project/mingw-w64/mingw-w64/mingw-w64-release/mingw-w64-v%{version}.tar.gz
 %endif
+# just to make widl to build on s390
+Patch0:         %{name}-2.0.999-s390.patch
 
 BuildRequires:  mingw32-filesystem >= 95
 BuildRequires:  mingw64-filesystem >= 95
@@ -33,6 +35,7 @@ tar -xf %{S:0}
 %else
 %setup -q -n mingw-w64-v%{version}
 %endif
+%patch0 -p2 -b .s390
 
 
 %build
@@ -70,7 +73,10 @@ popd
 
 
 %changelog
-* Sun Mar 11 2012 Erik van Pienbroek <epienbro@fedoraproject.org> - 2.0.999-0.1.trunk.20120124
+* Wed Mar 28 2012 Dan Horák <dan[at]danny.cz> - 2.0.999-0.3.trunk.20120124
+- fix build on s390(x)
+
+* Sun Mar 11 2012 Erik van Pienbroek <epienbro@fedoraproject.org> - 2.0.999-0.2.trunk.20120124
 - Eliminated several conditionals
 
 * Mon Jan 30 2012 Erik van Pienbroek <epienbro@fedoraproject.org> - 2.0.999-0.1.trunk.20120124
