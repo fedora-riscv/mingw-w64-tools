@@ -2,7 +2,7 @@
 
 Name:           mingw-w64-tools
 Version:        2.0.999
-Release:        0.3.trunk.%{snapshot_date}%{?dist}
+Release:        0.4.trunk.%{snapshot_date}%{?dist}
 Summary:        Supplementary tools which are part of the mingw-w64 toolchain
 
 License:        Public Domain
@@ -73,6 +73,9 @@ popd
 
 
 %changelog
+* Fri Jul 20 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.0.999-0.4.trunk.20120124
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
+
 * Wed Mar 28 2012 Dan Horák <dan[at]danny.cz> - 2.0.999-0.3.trunk.20120124
 - fix build on s390(x)
 
