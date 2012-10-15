@@ -2,7 +2,7 @@
 
 Name:           mingw-w64-tools
 Version:        2.0.999
-Release:        0.4.trunk.%{snapshot_date}%{?dist}
+Release:        0.5.trunk.%{snapshot_date}%{?dist}
 Summary:        Supplementary tools which are part of the mingw-w64 toolchain
 
 License:        Public Domain
@@ -19,6 +19,7 @@ Patch0:         %{name}-2.0.999-s390.patch
 BuildRequires:  mingw32-filesystem >= 95
 BuildRequires:  mingw64-filesystem >= 95
 
+Provides: bundled(libiberty)
 
 %description
 Supplementary tools which are part of the mingw-w64 toolchain
@@ -73,6 +74,9 @@ popd
 
 
 %changelog
+* Mon Oct 15 2012 Jon Ciesla <limburgher@gmail.com> - 2.0.999-0.5.trunk.20120124
+- Provides: bundled(libiberty)
+
 * Fri Jul 20 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.0.999-0.4.trunk.20120124
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 
