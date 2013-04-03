@@ -1,12 +1,12 @@
 diff -up mingw-w64-v2.0.999/mingw/mingw-w64-tools/widl/include/basetsd.h.s390 mingw-w64-v2.0.999/mingw/mingw-w64-tools/widl/include/basetsd.h
 --- mingw-w64-v2.0.999/mingw/mingw-w64-tools/widl/include/basetsd.h.s390	2012-01-24 11:11:33.000000000 +0100
 +++ mingw-w64-v2.0.999/mingw/mingw-w64-tools/widl/include/basetsd.h	2012-03-28 14:18:17.000000000 +0200
-@@ -36,7 +36,7 @@ extern "C" {
+@@ -36,7 +36,7 @@
   * 64-bit.
   */
  
--#if (defined(__x86_64__) || defined(__powerpc64__) || defined(__sparc64__)) && !defined(_WIN64)
-+#if (defined(__x86_64__) || defined(__powerpc64__) || defined(__sparc64__) || defined(__s390x__)) && !defined(_WIN64)
+-#if (defined(__x86_64__) || defined(__powerpc64__) || defined(__sparc64__) || defined(__aarch64__)) && !defined(_WIN64)
++#if (defined(__x86_64__) || defined(__powerpc64__) || defined(__sparc64__) || defined(__aarch64__) || defined(__s390x__)) && !defined(_WIN64)
  #define _WIN64
  #endif
  
