@@ -3,7 +3,7 @@
 
 Name:           mingw-w64-tools
 Version:        2.0.999
-Release:        0.7.%{branch}.%{snapshot_date}%{?dist}
+Release:        0.8.%{branch}.%{snapshot_date}%{?dist}
 Summary:        Supplementary tools which are part of the mingw-w64 toolchain
 
 # http://sourceforge.net/mailarchive/forum.php?thread_name=5157C0FC.1010309%40users.sourceforge.net&forum_name=mingw-w64-public
@@ -93,6 +93,9 @@ popd
 
 
 %changelog
+* Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.0.999-0.8.trunk.20130403
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
+
 * Wed Apr  3 2013 Erik van Pienbroek <epienbro@fedoraproject.org> - 2.0.999-0.7.trunk.20130403
 - Update to 20130403 snapshot
 - Use a different source tarball which doesn't contain unrelevant code (like libiberty)
