@@ -1,9 +1,10 @@
 %global snapshot_date 20130403
+%global snapshot_rev 6228
 %global branch trunk
 
 Name:           mingw-w64-tools
 Version:        2.0.999
-Release:        0.8.%{branch}.%{snapshot_date}%{?dist}
+Release:        0.9.%{branch}.r%{snapshot_rev}.%{snapshot_date}%{?dist}
 Summary:        Supplementary tools which are part of the mingw-w64 toolchain
 
 # http://sourceforge.net/mailarchive/forum.php?thread_name=5157C0FC.1010309%40users.sourceforge.net&forum_name=mingw-w64-public
@@ -14,8 +15,11 @@ Group:          Development/Libraries
 URL:            http://mingw-w64.sourceforge.net/
 %if 0%{?snapshot_date}
 # To regerenate a snapshot:
-# wget http://mingw-w64.svn.sourceforge.net/viewvc/mingw-w64/%{branch}/?view=tar -O mingw-w64-%{branch}-snapshot-$(date '+%Y%m%d').tar.gz
-Source0:        mingw-w64-%{branch}-snapshot-%{snapshot_date}.tar.gz
+# Use your regular webbrowser to open http://sourceforge.net/p/mingw-w64/code/%{snapshot_rev}/tarball?path=/trunk
+# This triggers the SourceForge instructure to generate a snapshot
+# After that you can pull in the archive with:
+# spectool -g mingw-w64-tools.spec
+Source0:        http://sourceforge.net/code-snapshots/svn/m/mi/mingw-w64/code/mingw-w64-code-%{snapshot_rev}-%{branch}.zip
 %else
 Source0:        http://downloads.sourceforge.net/project/mingw-w64/mingw-w64/mingw-w64-release/mingw-w64-v%{version}.tar.gz
 %endif
@@ -36,8 +40,8 @@ It contains gendef, genidl and mingw-w64-widl
 rm -rf mingw-w64-v%{version}
 mkdir mingw-w64-v%{version}
 cd mingw-w64-v%{version}
-tar -xf %{S:0}
-%setup -q -D -T -n mingw-w64-v%{version}/%{branch}
+unzip %{S:0}
+%setup -q -D -T -n mingw-w64-v%{version}/mingw-w64-code-%{snapshot_rev}-%{branch}
 %else
 %setup -q -n mingw-w64-v%{version}
 %endif
@@ -93,6 +97,11 @@ popd
 
 
 %changelog
+* Sat Sep  7 2013 Erik van Pienbroek <epienbro@fedoraproject.org> - 2.0.999-0.9.trunk.r6228.20130907
+- Update to r6228 (20130907 snapshot)
+- Updated instructions to regenerate snapshots
+  (SourceForge has changed their SVN infrastructure)
+
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.0.999-0.8.trunk.20130403
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 

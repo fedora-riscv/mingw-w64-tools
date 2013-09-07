@@ -26,7 +26,7 @@ diff -up mingw-w64-v2.0.999/mingw/mingw-w64-tools/widl/include/winnt.h.s390 ming
 +++ mingw-w64-v2.0.999/mingw/mingw-w64-tools/widl/include/winnt.h	2012-03-28 14:20:07.000000000 +0200
 @@ -1910,6 +1910,36 @@ typedef struct _CONTEXT
  
- #endif  /* __sparc__ */
+ #endif  /* __powerpc__ */
  
 +#ifdef __s390__
 +
