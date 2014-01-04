@@ -1,10 +1,10 @@
-%global snapshot_date 20130403
-%global snapshot_rev 6228
-%global branch trunk
+#%%global snapshot_date 20130403
+#%%global snapshot_rev 6228
+#%%global branch trunk
 
 Name:           mingw-w64-tools
-Version:        2.0.999
-Release:        0.10.%{branch}.r%{snapshot_rev}.%{snapshot_date}%{?dist}
+Version:        3.0.0
+Release:        1%{?dist}
 Summary:        Supplementary tools which are part of the mingw-w64 toolchain
 
 # http://sourceforge.net/mailarchive/forum.php?thread_name=5157C0FC.1010309%40users.sourceforge.net&forum_name=mingw-w64-public
@@ -21,7 +21,7 @@ URL:            http://mingw-w64.sourceforge.net/
 # spectool -g mingw-w64-tools.spec
 Source0:        http://sourceforge.net/code-snapshots/svn/m/mi/mingw-w64/code/mingw-w64-code-%{snapshot_rev}-%{branch}.zip
 %else
-Source0:        http://downloads.sourceforge.net/project/mingw-w64/mingw-w64/mingw-w64-release/mingw-w64-v%{version}.tar.gz
+Source0:        http://downloads.sourceforge.net/mingw-w64/mingw-w64-v%{version}.tar.bz2
 %endif
 # just to make widl to build on s390
 Patch0:         %{name}-2.0.999-s390.patch
@@ -101,6 +101,9 @@ popd
 
 
 %changelog
+* Sat Jan  4 2014 Erik van Pienbroek <epienbro@fedoraproject.org> - 3.0.0-1
+- Update to 3.0.0
+
 * Wed Jan  1 2014 Yaakov Selkowitz <yselkowitz@users.sourceforge.net> - 2.0.999-0.10.trunk.r6228.20130907
 - Fix widl default includedir (RHBZ #1047727)
 
