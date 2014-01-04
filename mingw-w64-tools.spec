@@ -4,7 +4,7 @@
 
 Name:           mingw-w64-tools
 Version:        2.0.999
-Release:        0.9.%{branch}.r%{snapshot_rev}.%{snapshot_date}%{?dist}
+Release:        0.10.%{branch}.r%{snapshot_rev}.%{snapshot_date}%{?dist}
 Summary:        Supplementary tools which are part of the mingw-w64 toolchain
 
 # http://sourceforge.net/mailarchive/forum.php?thread_name=5157C0FC.1010309%40users.sourceforge.net&forum_name=mingw-w64-public
@@ -26,6 +26,9 @@ Source0:        http://downloads.sourceforge.net/project/mingw-w64/mingw-w64/min
 # just to make widl to build on s390
 Patch0:         %{name}-2.0.999-s390.patch
 
+# https://bugzilla.redhat.com/show_bug.cgi?id=1047727
+Patch1:         %{name}-2.0.999-widl-includedir.patch
+
 BuildRequires:  mingw32-filesystem >= 95
 BuildRequires:  mingw64-filesystem >= 95
 
@@ -46,6 +49,7 @@ unzip %{S:0}
 %setup -q -n mingw-w64-v%{version}
 %endif
 %patch0 -p2 -b .s390
+%patch1 -p1 -b .widl-includedir
 
 
 %build
@@ -97,6 +101,9 @@ popd
 
 
 %changelog
+* Wed Jan  1 2014 Yaakov Selkowitz <yselkowitz@users.sourceforge.net> - 2.0.999-0.10.trunk.r6228.20130907
+- Fix widl default includedir (RHBZ #1047727)
+
 * Sat Sep  7 2013 Erik van Pienbroek <epienbro@fedoraproject.org> - 2.0.999-0.9.trunk.r6228.20130907
 - Update to r6228 (20130907 snapshot)
 - Updated instructions to regenerate snapshots
