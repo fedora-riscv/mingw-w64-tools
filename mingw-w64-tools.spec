@@ -3,7 +3,7 @@
 %global branch trunk
 
 Name:           mingw-w64-tools
-Version:        3.0.999
+Version:        3.1.999
 Release:        0.1.%{branch}.r%{snapshot_rev}.%{snapshot_date}%{?dist}
 Summary:        Supplementary tools which are part of the mingw-w64 toolchain
 
@@ -101,6 +101,9 @@ popd
 
 
 %changelog
+* Thu Jan  9 2014 Erik van Pienbroek <epienbro@fedoraproject.org> - 3.1.999-0.1.trunk.r6432.20140104
+- Bump version to keep working upgrade path
+
 * Sat Jan  4 2014 Erik van Pienbroek <epienbro@fedoraproject.org> - 3.0.999-0.1.trunk.r6432.20140104
 - Update to r6432 (20140104 snapshot)
 
