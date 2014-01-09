@@ -3,7 +3,7 @@
 #%%global branch trunk
 
 Name:           mingw-w64-tools
-Version:        3.0.0
+Version:        3.1.0
 Release:        1%{?dist}
 Summary:        Supplementary tools which are part of the mingw-w64 toolchain
 
@@ -101,6 +101,9 @@ popd
 
 
 %changelog
+* Thu Jan  9 2014 Erik van Pienbroek <epienbro@fedoraproject.org> - 3.1.0-1
+- Update to 3.1.0
+
 * Sat Jan  4 2014 Erik van Pienbroek <epienbro@fedoraproject.org> - 3.0.0-1
 - Update to 3.0.0
 
