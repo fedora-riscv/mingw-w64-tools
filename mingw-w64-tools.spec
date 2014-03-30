@@ -1,10 +1,10 @@
-%global snapshot_date 20140104
-%global snapshot_rev 6432
+%global snapshot_date 20140330
+%global snapshot_rev 6559
 %global branch trunk
 
 Name:           mingw-w64-tools
 Version:        3.1.999
-Release:        0.1.%{branch}.r%{snapshot_rev}.%{snapshot_date}%{?dist}
+Release:        0.2.%{branch}.r%{snapshot_rev}.%{snapshot_date}%{?dist}
 Summary:        Supplementary tools which are part of the mingw-w64 toolchain
 
 # http://sourceforge.net/mailarchive/forum.php?thread_name=5157C0FC.1010309%40users.sourceforge.net&forum_name=mingw-w64-public
@@ -101,6 +101,9 @@ popd
 
 
 %changelog
+* Sun Mar 30 2014 Erik van Pienbroek <epienbro@fedoraproject.org> - 3.1.999-0.2.trunk.r6559.20140330
+- Update to r6559 (20140330 snapshot)
+
 * Thu Jan  9 2014 Erik van Pienbroek <epienbro@fedoraproject.org> - 3.1.999-0.1.trunk.r6432.20140104
 - Bump version to keep working upgrade path
 
