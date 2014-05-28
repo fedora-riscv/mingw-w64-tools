@@ -5,7 +5,7 @@
 
 Name:           mingw-w64-tools
 Version:        3.1.999
-Release:        0.3.%{branch}.r%{snapshot_rev}.%{snapshot_date}%{?dist}
+Release:        0.3.%{branch}.git%{snapshot_rev_short}.%{snapshot_date}%{?dist}
 Summary:        Supplementary tools which are part of the mingw-w64 toolchain
 
 # http://sourceforge.net/mailarchive/forum.php?thread_name=5157C0FC.1010309%40users.sourceforge.net&forum_name=mingw-w64-public
