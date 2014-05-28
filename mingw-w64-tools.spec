@@ -1,10 +1,11 @@
-%global snapshot_date 20140330
-%global snapshot_rev 6559
+%global snapshot_date 20140524
+%global snapshot_rev 502c72047e68fecf07f628628b75296863ff5b35
+%global snapshot_rev_short %(echo %snapshot_rev | cut -c1-6)
 %global branch trunk
 
 Name:           mingw-w64-tools
 Version:        3.1.999
-Release:        0.2.%{branch}.r%{snapshot_rev}.%{snapshot_date}%{?dist}
+Release:        0.3.%{branch}.r%{snapshot_rev}.%{snapshot_date}%{?dist}
 Summary:        Supplementary tools which are part of the mingw-w64 toolchain
 
 # http://sourceforge.net/mailarchive/forum.php?thread_name=5157C0FC.1010309%40users.sourceforge.net&forum_name=mingw-w64-public
@@ -14,12 +15,12 @@ License:        GPLv3+ and LGPLv2+
 Group:          Development/Libraries
 URL:            http://mingw-w64.sourceforge.net/
 %if 0%{?snapshot_date}
-# To regerenate a snapshot:
-# Use your regular webbrowser to open http://sourceforge.net/p/mingw-w64/code/%{snapshot_rev}/tarball?path=/trunk
+# To regenerate a snapshot:
+# Use your regular webbrowser to open https://sourceforge.net/p/mingw-w64/mingw-w64/ci/%{snapshot_rev}/tarball
 # This triggers the SourceForge instructure to generate a snapshot
 # After that you can pull in the archive with:
 # spectool -g mingw-w64-tools.spec
-Source0:        http://sourceforge.net/code-snapshots/svn/m/mi/mingw-w64/code/mingw-w64-code-%{snapshot_rev}-%{branch}.zip
+Source0:        http://sourceforge.net/code-snapshots/git/m/mi/mingw-w64/mingw-w64.git/mingw-w64-mingw-w64-%{snapshot_rev}.zip
 %else
 Source0:        http://downloads.sourceforge.net/mingw-w64/mingw-w64-v%{version}.tar.bz2
 %endif
@@ -44,7 +45,7 @@ rm -rf mingw-w64-v%{version}
 mkdir mingw-w64-v%{version}
 cd mingw-w64-v%{version}
 unzip %{S:0}
-%setup -q -D -T -n mingw-w64-v%{version}/mingw-w64-code-%{snapshot_rev}-%{branch}
+%setup -q -D -T -n mingw-w64-v%{version}/mingw-w64-mingw-w64-%{snapshot_rev}
 %else
 %setup -q -n mingw-w64-v%{version}
 %endif
@@ -101,6 +102,10 @@ popd
 
 
 %changelog
+* Wed May 28 2014 Erik van Pienbroek <epienbro@fedoraproject.org> - 3.1.999-0.3.trunk.git502c72.20140524
+- Update to 20140524 snapshot (git rev 502c72)
+- Upstream has switched from SVN to Git
+
 * Sun Mar 30 2014 Erik van Pienbroek <epienbro@fedoraproject.org> - 3.1.999-0.2.trunk.r6559.20140330
 - Update to r6559 (20140330 snapshot)
 
