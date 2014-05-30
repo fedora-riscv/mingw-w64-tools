@@ -1,11 +1,11 @@
-%global snapshot_date 20140524
-%global snapshot_rev 502c72047e68fecf07f628628b75296863ff5b35
+%global snapshot_date 20140530
+%global snapshot_rev 430863ffea2f6101fbfc0ee35ee098ab2f96b53c
 %global snapshot_rev_short %(echo %snapshot_rev | cut -c1-6)
 %global branch trunk
 
 Name:           mingw-w64-tools
 Version:        3.1.999
-Release:        0.3.%{branch}.git%{snapshot_rev_short}.%{snapshot_date}%{?dist}
+Release:        0.4.%{branch}.git%{snapshot_rev_short}.%{snapshot_date}%{?dist}
 Summary:        Supplementary tools which are part of the mingw-w64 toolchain
 
 # http://sourceforge.net/mailarchive/forum.php?thread_name=5157C0FC.1010309%40users.sourceforge.net&forum_name=mingw-w64-public
@@ -102,6 +102,10 @@ popd
 
 
 %changelog
+* Fri May 30 2014 Erik van Pienbroek <epienbro@fedoraproject.org> - 3.1.999-0.4.trunk.git430863.20140530
+- Update to 20140530 snapshot (git rev 430863f)
+- Fixes compilation on aarch64
+
 * Wed May 28 2014 Erik van Pienbroek <epienbro@fedoraproject.org> - 3.1.999-0.3.trunk.git502c72.20140524
 - Update to 20140524 snapshot (git rev 502c72)
 - Upstream has switched from SVN to Git
