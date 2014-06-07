@@ -5,7 +5,7 @@
 
 Name:           mingw-w64-tools
 Version:        3.1.999
-Release:        0.4.%{branch}.git%{snapshot_rev_short}.%{snapshot_date}%{?dist}
+Release:        0.5.%{branch}.git%{snapshot_rev_short}.%{snapshot_date}%{?dist}
 Summary:        Supplementary tools which are part of the mingw-w64 toolchain
 
 # http://sourceforge.net/mailarchive/forum.php?thread_name=5157C0FC.1010309%40users.sourceforge.net&forum_name=mingw-w64-public
@@ -102,6 +102,9 @@ popd
 
 
 %changelog
+* Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.1.999-0.5.trunk.git430863.20140530
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
 * Fri May 30 2014 Erik van Pienbroek <epienbro@fedoraproject.org> - 3.1.999-0.4.trunk.git430863.20140530
 - Update to 20140530 snapshot (git rev 430863f)
 - Fixes compilation on aarch64
