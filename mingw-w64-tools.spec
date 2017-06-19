@@ -99,7 +99,7 @@ popd
 
 
 %files
-%doc COPYING
+%license COPYING
 %{_bindir}/gendef
 %{_bindir}/genidl
 %{_bindir}/%{mingw32_target}-widl
@@ -109,6 +109,7 @@ popd
 %changelog
 * Mon Jun 19 2017 Kalev Lember <klember@redhat.com> - 5.0.2-1
 - Update to 5.0.2
+- Use license macro for COPYING
 
 * Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 3.1.999-0.9.trunk.git430863.20140530
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
