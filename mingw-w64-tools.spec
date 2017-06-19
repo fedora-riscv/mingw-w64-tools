@@ -12,7 +12,6 @@ Summary:        Supplementary tools which are part of the mingw-w64 toolchain
 # The tools gendef and genidl are GPLv3+, widl is LGPLv2+
 License:        GPLv3+ and LGPLv2+
 
-Group:          Development/Libraries
 URL:            http://mingw-w64.sourceforge.net/
 %if 0%{?snapshot_date}
 # To regenerate a snapshot:
