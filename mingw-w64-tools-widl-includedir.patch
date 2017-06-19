@@ -1,0 +1,22 @@
+--- mingw-w64-v5.0.2/mingw-w64-tools/widl/Makefile.am.orig	2017-06-19 12:09:10.579443494 +0200
++++ mingw-w64-v5.0.2/mingw-w64-tools/widl/Makefile.am	2017-06-19 12:09:44.896439319 +0200
+@@ -58,7 +58,7 @@
+   include/pathtools.h \
+   include/winnt.rh
+ 
+-widl_CPPFLAGS = -I$(top_srcdir)/include -DDEFAULT_INCLUDE_DIR=\"$(includedir)/../$(target)/include\" -DDEFAULT_BINDIR=\"$(bindir)\"
++widl_CPPFLAGS = -I$(top_srcdir)/include -DDEFAULT_INCLUDE_DIR=\"$(prefix)/$(target)/sys-root/mingw/include\" -DDEFAULT_BINDIR=\"$(bindir)\"
+ widl_CFLAGS = -Wall -Wformat -Wpacked -Wmissing-declarations -Wimplicit-function-declaration -Wmissing-prototypes -Wstrict-aliasing=2
+ 
+ DISTCHECK_CONFIGURE_FLAGS = --host=$(host) --target=$(target)
+--- mingw-w64-v5.0.2/mingw-w64-tools/widl/Makefile.in.orig	2017-06-19 12:09:18.051442585 +0200
++++ mingw-w64-v5.0.2/mingw-w64-tools/widl/Makefile.in	2017-06-19 12:10:12.177436000 +0200
+@@ -285,7 +285,7 @@
+   include/pathtools.h \
+   include/winnt.rh
+ 
+-widl_CPPFLAGS = -I$(top_srcdir)/include -DDEFAULT_INCLUDE_DIR=\"$(includedir)/../$(target)/include\" -DDEFAULT_BINDIR=\"$(bindir)\"
++widl_CPPFLAGS = -I$(top_srcdir)/include -DDEFAULT_INCLUDE_DIR=\"$(prefix)/$(target)/sys-root/mingw/include\" -DDEFAULT_BINDIR=\"$(bindir)\"
+ widl_CFLAGS = -Wall -Wformat -Wpacked -Wmissing-declarations -Wimplicit-function-declaration -Wmissing-prototypes -Wstrict-aliasing=2
+ DISTCHECK_CONFIGURE_FLAGS = --host=$(host) --target=$(target)
+ all: all-am

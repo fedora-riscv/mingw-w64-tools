@@ -1,11 +1,11 @@
-%global snapshot_date 20140530
-%global snapshot_rev 430863ffea2f6101fbfc0ee35ee098ab2f96b53c
-%global snapshot_rev_short %(echo %snapshot_rev | cut -c1-6)
-%global branch trunk
+#%%global snapshot_date 20140530
+#%%global snapshot_rev 430863ffea2f6101fbfc0ee35ee098ab2f96b53c
+#%%global snapshot_rev_short %(echo %snapshot_rev | cut -c1-6)
+#%%global branch trunk
 
 Name:           mingw-w64-tools
-Version:        3.1.999
-Release:        0.9.%{branch}.git%{snapshot_rev_short}.%{snapshot_date}%{?dist}
+Version:        5.0.2
+Release:        1%{?dist}
 Summary:        Supplementary tools which are part of the mingw-w64 toolchain
 
 # http://sourceforge.net/mailarchive/forum.php?thread_name=5157C0FC.1010309%40users.sourceforge.net&forum_name=mingw-w64-public
@@ -25,10 +25,14 @@ Source0:        http://sourceforge.net/code-snapshots/git/m/mi/mingw-w64/mingw-w
 Source0:        http://downloads.sourceforge.net/mingw-w64/mingw-w64-v%{version}.tar.bz2
 %endif
 # just to make widl to build on s390
-Patch0:         %{name}-2.0.999-s390.patch
+Patch0:         mingw-w64-tools-2.0.999-s390.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1047727
-Patch1:         %{name}-2.0.999-widl-includedir.patch
+Patch1:         mingw-w64-tools-widl-includedir.patch
+
+# Backported from upstream
+Patch2:         0001-genpeimg.c-pass_args-add-a-fallthru-comment-in-the-s.patch
+Patch3:         0002-gendef.c-getMemonic-add-fallthru-comments-in-the-swi.patch
 
 BuildRequires:  mingw32-filesystem >= 95
 BuildRequires:  mingw64-filesystem >= 95
@@ -51,6 +55,8 @@ unzip %{S:0}
 %endif
 %patch0 -p2 -b .s390
 %patch1 -p1 -b .widl-includedir
+%patch2 -p1
+%patch3 -p1
 
 
 %build
@@ -102,6 +108,9 @@ popd
 
 
 %changelog
+* Mon Jun 19 2017 Kalev Lember <klember@redhat.com> - 5.0.2-1
+- Update to 5.0.2
+
 * Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 3.1.999-0.9.trunk.git430863.20140530
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
