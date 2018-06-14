@@ -4,8 +4,8 @@
 #%%global branch trunk
 
 Name:           mingw-w64-tools
-Version:        5.0.2
-Release:        4%{?dist}
+Version:        5.0.3
+Release:        1%{?dist}
 Summary:        Supplementary tools which are part of the mingw-w64 toolchain
 
 # http://sourceforge.net/mailarchive/forum.php?thread_name=5157C0FC.1010309%40users.sourceforge.net&forum_name=mingw-w64-public
@@ -29,10 +29,6 @@ Patch0:         mingw-w64-tools-2.0.999-s390.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=1047727
 Patch1:         mingw-w64-tools-widl-includedir.patch
 
-# Backported from upstream
-Patch2:         0001-genpeimg.c-pass_args-add-a-fallthru-comment-in-the-s.patch
-Patch3:         0002-gendef.c-getMemonic-add-fallthru-comments-in-the-swi.patch
-
 BuildRequires:  mingw32-filesystem >= 95
 BuildRequires:  mingw64-filesystem >= 95
 
@@ -54,8 +50,6 @@ unzip %{S:0}
 %endif
 %patch0 -p2 -b .s390
 %patch1 -p1 -b .widl-includedir
-%patch2 -p1
-%patch3 -p1
 
 
 %build
@@ -107,6 +101,9 @@ popd
 
 
 %changelog
+* Thu Jun 14 2018 Sandro Mani <manisandro@gmail.com> - 5.0.3-1
+- Update to 5.0.3
+
 * Thu Feb 08 2018 Fedora Release Engineering <releng@fedoraproject.org> - 5.0.2-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
