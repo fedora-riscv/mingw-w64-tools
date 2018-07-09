@@ -4,7 +4,7 @@
 #%%global branch trunk
 
 Name:           mingw-w64-tools
-Version:        5.0.3
+Version:        5.0.4
 Release:        1%{?dist}
 Summary:        Supplementary tools which are part of the mingw-w64 toolchain
 
@@ -102,6 +102,9 @@ popd
 
 
 %changelog
+* Mon Jul 09 2018 Kalev Lember <klember@redhat.com> - 5.0.4-1
+- Update to 5.0.4
+
 * Thu Jun 14 2018 Sandro Mani <manisandro@gmail.com> - 5.0.3-1
 - Update to 5.0.3
 
