@@ -1,16 +1,16 @@
-diff -up mingw-w64-v2.0.999/mingw/mingw-w64-tools/widl/include/basetsd.h.s390 mingw-w64-v2.0.999/mingw/mingw-w64-tools/widl/include/basetsd.h
---- mingw-w64-v2.0.999/mingw/mingw-w64-tools/widl/include/basetsd.h.s390	2012-01-24 11:11:33.000000000 +0100
-+++ mingw-w64-v2.0.999/mingw/mingw-w64-tools/widl/include/basetsd.h	2012-03-28 14:18:17.000000000 +0200
-@@ -36,7 +36,7 @@
+diff -rupN mingw-w64-v6.0.0/mingw-w64-tools/widl/include/basetsd.h mingw-w64-v6.0.0-new/mingw-w64-tools/widl/include/basetsd.h
+--- mingw-w64-v6.0.0/mingw-w64-tools/widl/include/basetsd.h	2018-09-14 16:16:43.000000000 +0200
++++ mingw-w64-v6.0.0-new/mingw-w64-tools/widl/include/basetsd.h	2019-05-07 17:55:56.077196349 +0200
+@@ -36,7 +36,7 @@ extern "C" {
   * 64-bit.
   */
  
--#if (defined(__x86_64__) || defined(__powerpc64__) || defined(__sparc64__) || defined(__aarch64__)) && !defined(_WIN64)
-+#if (defined(__x86_64__) || defined(__powerpc64__) || defined(__sparc64__) || defined(__aarch64__) || defined(__s390x__)) && !defined(_WIN64)
+-#if (defined(__x86_64__) || defined(__powerpc64__) || defined(__aarch64__)) && !defined(_WIN64)
++#if (defined(__x86_64__) || defined(__powerpc64__) || defined(__aarch64__) || defined(__s390x__)) && !defined(_WIN64)
  #define _WIN64
  #endif
  
-@@ -305,6 +305,10 @@ typedef ULONG_PTR KAFFINITY, *PKAFFINITY
+@@ -309,6 +309,10 @@ typedef ULONG_PTR KAFFINITY, *PKAFFINITY
  # undef  WORDS_BIGENDIAN
  # undef  BITFIELDS_BIGENDIAN
  # undef  ALLOW_UNALIGNED_ACCESS
@@ -21,10 +21,10 @@ diff -up mingw-w64-v2.0.999/mingw/mingw-w64-tools/widl/include/basetsd.h.s390 mi
  #elif !defined(RC_INVOKED) && !defined(__WIDL__) && !defined(__midl)
  # error Unknown CPU architecture!
  #endif
-diff -up mingw-w64-v2.0.999/mingw/mingw-w64-tools/widl/include/winnt.h.s390 mingw-w64-v2.0.999/mingw/mingw-w64-tools/widl/include/winnt.h
---- mingw-w64-v2.0.999/mingw/mingw-w64-tools/widl/include/winnt.h.s390	2012-01-24 11:11:33.000000000 +0100
-+++ mingw-w64-v2.0.999/mingw/mingw-w64-tools/widl/include/winnt.h	2012-03-28 14:20:07.000000000 +0200
-@@ -1910,6 +1910,36 @@ typedef struct _CONTEXT
+diff -rupN mingw-w64-v6.0.0/mingw-w64-tools/widl/include/winnt.h mingw-w64-v6.0.0-new/mingw-w64-tools/widl/include/winnt.h
+--- mingw-w64-v6.0.0/mingw-w64-tools/widl/include/winnt.h	2018-09-14 16:16:43.000000000 +0200
++++ mingw-w64-v6.0.0-new/mingw-w64-tools/widl/include/winnt.h	2019-05-07 17:55:56.078196338 +0200
+@@ -2108,6 +2108,36 @@ typedef struct _STACK_FRAME_HEADER
  
  #endif  /* __powerpc__ */
  

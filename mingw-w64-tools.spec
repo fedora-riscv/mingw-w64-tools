@@ -4,8 +4,8 @@
 #%%global branch trunk
 
 Name:           mingw-w64-tools
-Version:        5.0.4
-Release:        3%{?dist}
+Version:        6.0.0
+Release:        1%{?dist}
 Summary:        Supplementary tools which are part of the mingw-w64 toolchain
 
 # http://sourceforge.net/mailarchive/forum.php?thread_name=5157C0FC.1010309%40users.sourceforge.net&forum_name=mingw-w64-public
@@ -45,12 +45,10 @@ rm -rf mingw-w64-v%{version}
 mkdir mingw-w64-v%{version}
 cd mingw-w64-v%{version}
 unzip %{S:0}
-%setup -q -D -T -n mingw-w64-v%{version}/mingw-w64-mingw-w64-%{snapshot_rev}
+%autosetup -p1 -D -T -n mingw-w64-v%{version}/mingw-w64-mingw-w64-%{snapshot_rev}
 %else
-%setup -q -n mingw-w64-v%{version}
+%autosetup -p1 -n mingw-w64-v%{version}
 %endif
-%patch0 -p2 -b .s390
-%patch1 -p1 -b .widl-includedir
 
 
 %build
@@ -102,6 +100,9 @@ popd
 
 
 %changelog
+* Tue May 07 2019 Sandro Mani <manisandro@gmail.com> - 6.0.0-1
+- Update to 6.0.0
+
 * Fri Feb 01 2019 Fedora Release Engineering <releng@fedoraproject.org> - 5.0.4-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 
