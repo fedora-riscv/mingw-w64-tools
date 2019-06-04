@@ -29,6 +29,9 @@ Patch0:         mingw-w64-tools-2.0.999-s390.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=1047727
 Patch1:         mingw-w64-tools-widl-includedir.patch
 
+# aarch64 does not seem to know about __builtin_ms_va_list
+Patch2:         mingw-w64-tools-aarch64.patch
+
 BuildRequires:  gcc
 BuildRequires:  mingw32-filesystem >= 95
 BuildRequires:  mingw64-filesystem >= 95
