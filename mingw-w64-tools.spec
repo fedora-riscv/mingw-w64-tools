@@ -5,7 +5,7 @@
 
 Name:           mingw-w64-tools
 Version:        6.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Supplementary tools which are part of the mingw-w64 toolchain
 
 # http://sourceforge.net/mailarchive/forum.php?thread_name=5157C0FC.1010309%40users.sourceforge.net&forum_name=mingw-w64-public
@@ -103,6 +103,9 @@ popd
 
 
 %changelog
+* Thu Jul 25 2019 Fedora Release Engineering <releng@fedoraproject.org> - 6.0.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
+
 * Tue May 07 2019 Sandro Mani <manisandro@gmail.com> - 6.0.0-1
 - Update to 6.0.0
 
