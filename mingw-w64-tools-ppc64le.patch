@@ -1,0 +1,12 @@
+diff -rupN --no-dereference mingw-w64-v7.0.0/mingw-w64-tools/widl/include/winnt.h mingw-w64-v7.0.0-new/mingw-w64-tools/widl/include/winnt.h
+--- mingw-w64-v7.0.0/mingw-w64-tools/widl/include/winnt.h	2020-06-20 01:18:23.245691600 +0200
++++ mingw-w64-v7.0.0-new/mingw-w64-tools/widl/include/winnt.h	2020-06-20 01:18:23.536691074 +0200
+@@ -2225,7 +2225,7 @@ typedef struct
+     DWORD Dr5;
+     DWORD Dr6;
+     DWORD Dr7;
+-} CONTEXT;
++} CONTEXT, *PCONTEXT;
+ 
+ typedef struct _STACK_FRAME_HEADER
+ {

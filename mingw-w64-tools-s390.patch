@@ -1,0 +1,103 @@
+diff -rupN --no-dereference mingw-w64-v7.0.0/mingw-w64-tools/widl/include/basetsd.h mingw-w64-v7.0.0-new/mingw-w64-tools/widl/include/basetsd.h
+--- mingw-w64-v7.0.0/mingw-w64-tools/widl/include/basetsd.h	2019-11-09 06:33:24.000000000 +0100
++++ mingw-w64-v7.0.0-new/mingw-w64-tools/widl/include/basetsd.h	2020-06-20 01:18:22.981692078 +0200
+@@ -36,7 +36,7 @@ extern "C" {
+  * 64-bit.
+  */
+ 
+-#if (defined(__x86_64__) || defined(__powerpc64__) || defined(__aarch64__)) && !defined(_WIN64)
++#if (defined(__x86_64__) || defined(__powerpc64__) || defined(__aarch64__) || defined(__s390x__)) && !defined(_WIN64)
+ #define _WIN64
+ #endif
+ 
+@@ -309,6 +309,10 @@ typedef ULONG_PTR KAFFINITY, *PKAFFINITY
+ # undef  WORDS_BIGENDIAN
+ # undef  BITFIELDS_BIGENDIAN
+ # undef  ALLOW_UNALIGNED_ACCESS
++#elif defined(__s390__)
++# define WORDS_BIGENDIAN
++# define BITFIELDS_BIGENDIAN
++# define ALLOW_UNALIGNED_ACCESS
+ #elif !defined(RC_INVOKED) && !defined(__WIDL__) && !defined(__midl)
+ # error Unknown CPU architecture!
+ #endif
+diff -rupN --no-dereference mingw-w64-v7.0.0/mingw-w64-tools/widl/include/winnt.h mingw-w64-v7.0.0-new/mingw-w64-tools/widl/include/winnt.h
+--- mingw-w64-v7.0.0/mingw-w64-tools/widl/include/winnt.h	2019-11-09 06:33:24.000000000 +0100
++++ mingw-w64-v7.0.0-new/mingw-w64-tools/widl/include/winnt.h	2020-06-20 01:18:22.982692077 +0200
+@@ -2248,6 +2248,36 @@ typedef struct _STACK_FRAME_HEADER
+ 
+ #endif  /* __powerpc__ */
+ 
++#ifdef __s390x__
++
++/*
++ * FIXME:
++ *
++ * There is no official CONTEXT structure defined for the S/390
++ * architecture, so I just made one up.
++ *
++ * This structure is completely dummy, made just to build widl.
++ *
++ */
++
++#define CONTEXT_S390X            0x10000000
++
++#define CONTEXT_CONTROL         (CONTEXT_S390X | 0x00000001)
++#define CONTEXT_FLOATING_POINT  (CONTEXT_S390X | 0x00000002)
++#define CONTEXT_INTEGER         (CONTEXT_S390X | 0x00000004)
++
++#define CONTEXT_FULL (CONTEXT_CONTROL | CONTEXT_FLOATING_POINT | CONTEXT_INTEGER)
++
++#define EXCEPTION_READ_FAULT    0
++#define EXCEPTION_WRITE_FAULT   1
++#define EXCEPTION_EXECUTE_FAULT 8
++
++typedef struct _CONTEXT
++{
++} CONTEXT, *PCONTEXT;
++
++#endif  /* __s390x__ */
++
+ #if !defined(CONTEXT_FULL) && !defined(RC_INVOKED)
+ #error You need to define a CONTEXT for your CPU
+ #endif
+diff -rupN --no-dereference mingw-w64-v7.0.0/mingw-w64-tools/widl/src/widl.c mingw-w64-v7.0.0-new/mingw-w64-tools/widl/src/widl.c
+--- mingw-w64-v7.0.0/mingw-w64-tools/widl/src/widl.c	2019-11-09 06:33:24.000000000 +0100
++++ mingw-w64-v7.0.0-new/mingw-w64-tools/widl/src/widl.c	2020-06-20 01:18:22.982692077 +0200
+@@ -102,6 +102,8 @@ enum target_cpu target_cpu = CPU_POWERPC
+ enum target_cpu target_cpu = CPU_ARM;
+ #elif defined(__aarch64__)
+ enum target_cpu target_cpu = CPU_ARM64;
++#elif defined(__s390x__)
++enum target_cpu target_cpu = CPU_S390X;
+ #else
+ #error Unsupported CPU
+ #endif
+@@ -294,6 +296,7 @@ static void set_target( const char *targ
+         { "armv7a",  CPU_ARM },
+         { "arm64",   CPU_ARM64 },
+         { "aarch64", CPU_ARM64 },
++        { "s390x",   CPU_S390X }
+     };
+ 
+     unsigned int i;
+@@ -755,6 +758,7 @@ int main(int argc,char *argv[])
+       else pointer_size = 4;
+       break;
+   case CPU_x86_64:
++  case CPU_S390X:
+       if (pointer_size == 4) target_cpu = CPU_x86;
+       else pointer_size = 8;
+       break;
+diff -rupN --no-dereference mingw-w64-v7.0.0/mingw-w64-tools/widl/src/widl.h mingw-w64-v7.0.0-new/mingw-w64-tools/widl/src/widl.h
+--- mingw-w64-v7.0.0/mingw-w64-tools/widl/src/widl.h	2019-11-09 06:33:24.000000000 +0100
++++ mingw-w64-v7.0.0-new/mingw-w64-tools/widl/src/widl.h	2020-06-20 01:18:22.982692077 +0200
+@@ -76,7 +76,7 @@ extern int char_number;
+ 
+ enum target_cpu
+ {
+-    CPU_x86, CPU_x86_64, CPU_POWERPC, CPU_ARM, CPU_ARM64, CPU_LAST = CPU_ARM64
++    CPU_x86, CPU_x86_64, CPU_POWERPC, CPU_ARM, CPU_ARM64, CPU_S390X, CPU_LAST = CPU_S390X
+ };
+ 
+ extern enum target_cpu target_cpu;

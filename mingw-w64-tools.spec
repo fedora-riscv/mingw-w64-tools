@@ -4,8 +4,8 @@
 #%%global branch trunk
 
 Name:           mingw-w64-tools
-Version:        6.0.0
-Release:        3%{?dist}
+Version:        7.0.0
+Release:        1%{?dist}
 Summary:        Supplementary tools which are part of the mingw-w64 toolchain
 
 # http://sourceforge.net/mailarchive/forum.php?thread_name=5157C0FC.1010309%40users.sourceforge.net&forum_name=mingw-w64-public
@@ -24,13 +24,13 @@ Source0:        http://sourceforge.net/code-snapshots/git/m/mi/mingw-w64/mingw-w
 Source0:        http://downloads.sourceforge.net/mingw-w64/mingw-w64-v%{version}.tar.bz2
 %endif
 # just to make widl to build on s390
-Patch0:         mingw-w64-tools-2.0.999-s390.patch
-
-# https://bugzilla.redhat.com/show_bug.cgi?id=1047727
-Patch1:         mingw-w64-tools-widl-includedir.patch
+Patch0:         mingw-w64-tools-s390.patch
 
 # aarch64 does not seem to know about __builtin_ms_va_list
-Patch2:         mingw-w64-tools-aarch64.patch
+Patch1:         mingw-w64-tools-aarch64.patch
+
+# fix ppc64le build
+Patch2:         mingw-w64-tools-ppc64le.patch
 
 BuildRequires:  gcc
 BuildRequires:  mingw32-filesystem >= 95
@@ -73,13 +73,13 @@ pushd mingw-w64-tools
         %global _configure ../configure
         mkdir win32
         pushd win32
-          %configure --target=%{mingw32_target} --program-prefix=%{mingw32_target}-
-          make %{?_smp_mflags}
+          %configure --target=%{mingw32_target} --program-prefix=%{mingw32_target}- --with-widl-includedir=%{mingw32_includedir}
+          %make_build
         popd
         mkdir win64
         pushd win64
-          %configure --target=%{mingw64_target} --program-prefix=%{mingw64_target}-
-          make %{?_smp_mflags}
+          %configure --target=%{mingw64_target} --program-prefix=%{mingw64_target}- --with-widl-includedir=%{mingw64_includedir}
+          %make_build
         popd
     popd
 popd
@@ -87,10 +87,10 @@ popd
 
 %install
 pushd mingw-w64-tools
-    make -C gendef DESTDIR=$RPM_BUILD_ROOT install
-    make -C genidl DESTDIR=$RPM_BUILD_ROOT install
-    make -C widl/win32 DESTDIR=$RPM_BUILD_ROOT install
-    make -C widl/win64 DESTDIR=$RPM_BUILD_ROOT install
+    %make_install -C gendef
+    %make_install -C genidl
+    %make_install -C widl/win32
+    %make_install -C widl/win64
 popd
 
 
@@ -103,6 +103,9 @@ popd
 
 
 %changelog
+* Sat Jun 20 2020 Sandro Mani <manisandro@gmail.com> - 7.0.0-1
+- Update to 7.0.0
+
 * Wed Jan 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 6.0.0-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
 
