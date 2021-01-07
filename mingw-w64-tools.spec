@@ -32,6 +32,7 @@ Patch1:         mingw-w64-tools-aarch64.patch
 # fix ppc64le build
 Patch2:         mingw-w64-tools-ppc64le.patch
 
+BuildRequires: make
 BuildRequires:  gcc
 BuildRequires:  mingw32-filesystem >= 95
 BuildRequires:  mingw64-filesystem >= 95
