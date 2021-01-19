@@ -4,8 +4,8 @@
 #%%global branch trunk
 
 Name:           mingw-w64-tools
-Version:        7.0.0
-Release:        2%{?dist}
+Version:        8.0.0
+Release:        1%{?dist}
 Summary:        Supplementary tools which are part of the mingw-w64 toolchain
 
 # http://sourceforge.net/mailarchive/forum.php?thread_name=5157C0FC.1010309%40users.sourceforge.net&forum_name=mingw-w64-public
@@ -28,9 +28,6 @@ Patch0:         mingw-w64-tools-s390.patch
 
 # aarch64 does not seem to know about __builtin_ms_va_list
 Patch1:         mingw-w64-tools-aarch64.patch
-
-# fix ppc64le build
-Patch2:         mingw-w64-tools-ppc64le.patch
 
 BuildRequires: make
 BuildRequires:  gcc
@@ -104,6 +101,9 @@ popd
 
 
 %changelog
+* Fri Jan 15 2021 Sandro Mani <manisandro@gmail.com> - 8.0.0-1
+- Update to 8.0.0
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 7.0.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
