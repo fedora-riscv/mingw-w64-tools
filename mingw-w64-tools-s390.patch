@@ -1,6 +1,6 @@
-diff -rupN --no-dereference mingw-w64-v8.0.2/mingw-w64-tools/widl/include/basetsd.h mingw-w64-v8.0.2-new/mingw-w64-tools/widl/include/basetsd.h
---- mingw-w64-v8.0.2/mingw-w64-tools/widl/include/basetsd.h	2021-05-09 08:38:05.000000000 +0200
-+++ mingw-w64-v8.0.2-new/mingw-w64-tools/widl/include/basetsd.h	2021-05-17 10:22:10.313083581 +0200
+diff -rupN --no-dereference mingw-w64-v9.0.0/mingw-w64-tools/widl/include/basetsd.h mingw-w64-v9.0.0-new/mingw-w64-tools/widl/include/basetsd.h
+--- mingw-w64-v9.0.0/mingw-w64-tools/widl/include/basetsd.h	2021-05-22 14:34:25.000000000 +0200
++++ mingw-w64-v9.0.0-new/mingw-w64-tools/widl/include/basetsd.h	2021-06-22 09:42:24.542066184 +0200
 @@ -36,7 +36,7 @@ extern "C" {
   * 64-bit.
   */
@@ -10,7 +10,7 @@ diff -rupN --no-dereference mingw-w64-v8.0.2/mingw-w64-tools/widl/include/basets
  #define _WIN64
  #endif
  
-@@ -289,6 +289,8 @@ typedef ULONG_PTR KAFFINITY, *PKAFFINITY
+@@ -295,6 +295,8 @@ typedef ULONG_PTR KAFFINITY, *PKAFFINITY
  # define WORDS_BIGENDIAN
  #elif defined(__MIPSEL__)
  # undef  WORDS_BIGENDIAN
@@ -19,10 +19,10 @@ diff -rupN --no-dereference mingw-w64-v8.0.2/mingw-w64-tools/widl/include/basets
  #elif !defined(RC_INVOKED) && !defined(__WIDL__) && !defined(__midl)
  # error Unknown CPU architecture!
  #endif
-diff -rupN --no-dereference mingw-w64-v8.0.2/mingw-w64-tools/widl/include/winnt.h mingw-w64-v8.0.2-new/mingw-w64-tools/widl/include/winnt.h
---- mingw-w64-v8.0.2/mingw-w64-tools/widl/include/winnt.h	2021-05-09 08:38:05.000000000 +0200
-+++ mingw-w64-v8.0.2-new/mingw-w64-tools/widl/include/winnt.h	2021-05-17 10:22:10.314083581 +0200
-@@ -2335,6 +2335,36 @@ typedef struct _STACK_FRAME_HEADER
+diff -rupN --no-dereference mingw-w64-v9.0.0/mingw-w64-tools/widl/include/winnt.h mingw-w64-v9.0.0-new/mingw-w64-tools/widl/include/winnt.h
+--- mingw-w64-v9.0.0/mingw-w64-tools/widl/include/winnt.h	2021-05-22 14:34:25.000000000 +0200
++++ mingw-w64-v9.0.0-new/mingw-w64-tools/widl/include/winnt.h	2021-06-22 09:42:24.543066195 +0200
+@@ -2396,6 +2396,36 @@ typedef struct _STACK_FRAME_HEADER
  
  #endif  /* __powerpc__ */
  
@@ -59,10 +59,10 @@ diff -rupN --no-dereference mingw-w64-v8.0.2/mingw-w64-tools/widl/include/winnt.
  #if !defined(CONTEXT_FULL) && !defined(RC_INVOKED)
  #error You need to define a CONTEXT for your CPU
  #endif
-diff -rupN --no-dereference mingw-w64-v8.0.2/mingw-w64-tools/widl/src/widl.c mingw-w64-v8.0.2-new/mingw-w64-tools/widl/src/widl.c
---- mingw-w64-v8.0.2/mingw-w64-tools/widl/src/widl.c	2021-05-09 08:38:05.000000000 +0200
-+++ mingw-w64-v8.0.2-new/mingw-w64-tools/widl/src/widl.c	2021-05-17 10:22:10.314083581 +0200
-@@ -104,6 +104,8 @@ enum target_cpu target_cpu = CPU_POWERPC
+diff -rupN --no-dereference mingw-w64-v9.0.0/mingw-w64-tools/widl/src/widl.c mingw-w64-v9.0.0-new/mingw-w64-tools/widl/src/widl.c
+--- mingw-w64-v9.0.0/mingw-w64-tools/widl/src/widl.c	2021-05-22 14:34:25.000000000 +0200
++++ mingw-w64-v9.0.0-new/mingw-w64-tools/widl/src/widl.c	2021-06-22 09:42:24.546066227 +0200
+@@ -106,6 +106,8 @@ enum target_cpu target_cpu = CPU_POWERPC
  enum target_cpu target_cpu = CPU_ARM;
  #elif defined(__aarch64__)
  enum target_cpu target_cpu = CPU_ARM64;
@@ -71,15 +71,15 @@ diff -rupN --no-dereference mingw-w64-v8.0.2/mingw-w64-tools/widl/src/widl.c min
  #else
  #error Unsupported CPU
  #endif
-@@ -302,6 +304,7 @@ static void set_target( const char *targ
-         { "armv7a",  CPU_ARM },
-         { "arm64",   CPU_ARM64 },
-         { "aarch64", CPU_ARM64 },
-+        { "s390x",   CPU_S390X }
+@@ -301,6 +303,7 @@ static void set_target( const char *targ
+         { "armv7a",         CPU_ARM },
+         { "arm64",          CPU_ARM64 },
+         { "aarch64",        CPU_ARM64 },
++        { "s390x",          CPU_S390X },
      };
  
      unsigned int i;
-@@ -788,6 +791,7 @@ int main(int argc,char *argv[])
+@@ -787,6 +790,7 @@ int main(int argc,char *argv[])
        else pointer_size = 4;
        break;
    case CPU_x86_64:
@@ -87,15 +87,15 @@ diff -rupN --no-dereference mingw-w64-v8.0.2/mingw-w64-tools/widl/src/widl.c min
        if (pointer_size == 4) target_cpu = CPU_x86;
        else pointer_size = 8;
        break;
-diff -rupN --no-dereference mingw-w64-v8.0.2/mingw-w64-tools/widl/src/widl.h mingw-w64-v8.0.2-new/mingw-w64-tools/widl/src/widl.h
---- mingw-w64-v8.0.2/mingw-w64-tools/widl/src/widl.h	2021-05-09 08:38:05.000000000 +0200
-+++ mingw-w64-v8.0.2-new/mingw-w64-tools/widl/src/widl.h	2021-05-17 10:22:10.314083581 +0200
+diff -rupN --no-dereference mingw-w64-v9.0.0/mingw-w64-tools/widl/src/widl.h mingw-w64-v9.0.0-new/mingw-w64-tools/widl/src/widl.h
+--- mingw-w64-v9.0.0/mingw-w64-tools/widl/src/widl.h	2021-05-22 14:34:25.000000000 +0200
++++ mingw-w64-v9.0.0-new/mingw-w64-tools/widl/src/widl.h	2021-06-22 09:42:24.546066227 +0200
 @@ -76,7 +76,7 @@ extern int char_number;
  
  enum target_cpu
  {
--    CPU_x86, CPU_x86_64, CPU_POWERPC, CPU_ARM, CPU_ARM64, CPU_LAST = CPU_ARM64
-+    CPU_x86, CPU_x86_64, CPU_POWERPC, CPU_ARM, CPU_ARM64, CPU_S390X, CPU_LAST = CPU_S390X
+-    CPU_x86, CPU_x86_64, CPU_POWERPC, CPU_ARM, CPU_ARM64, CPU_POWERPC64, CPU_LAST = CPU_POWERPC64
++    CPU_x86, CPU_x86_64, CPU_POWERPC, CPU_ARM, CPU_ARM64, CPU_POWERPC64, CPU_S390X, CPU_LAST = CPU_S390X
  };
  
  extern enum target_cpu target_cpu;
