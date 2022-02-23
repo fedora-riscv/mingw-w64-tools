@@ -5,7 +5,7 @@
 
 Name:           mingw-w64-tools
 Version:        9.0.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Supplementary tools which are part of the mingw-w64 toolchain
 
 # http://sourceforge.net/mailarchive/forum.php?thread_name=5157C0FC.1010309%40users.sourceforge.net&forum_name=mingw-w64-public
@@ -28,8 +28,9 @@ Patch0:         mingw-w64-tools-s390.patch
 
 BuildRequires: make
 BuildRequires:  gcc
-BuildRequires:  mingw32-filesystem >= 95
-BuildRequires:  mingw64-filesystem >= 95
+BuildRequires:  mingw32-filesystem >= 133
+BuildRequires:  mingw64-filesystem >= 133
+BuildRequires:  ucrt64-filesystem >= 133
 
 
 %description
@@ -76,6 +77,11 @@ pushd mingw-w64-tools
           %configure --target=%{mingw64_target} --program-prefix=%{mingw64_target}- --with-widl-includedir=%{mingw64_includedir}
           %make_build
         popd
+        mkdir ucrt64
+        pushd ucrt64
+          %configure --target=%{ucrt64_target} --program-prefix=%{ucrt64_target}- --with-widl-includedir=%{ucrt64_includedir}
+          %make_build
+        popd
     popd
 popd
 
@@ -86,6 +92,7 @@ pushd mingw-w64-tools
     %make_install -C genidl
     %make_install -C widl/win32
     %make_install -C widl/win64
+    %make_install -C widl/ucrt64
 popd
 
 
@@ -95,9 +102,13 @@ popd
 %{_bindir}/genidl
 %{_bindir}/%{mingw32_target}-widl
 %{_bindir}/%{mingw64_target}-widl
+%{_bindir}/%{ucrt64_target}-widl
 
 
 %changelog
+* Wed Feb 23 2022 Marc-André Lureau <marcandre.lureau@redhat.com> - 9.0.0-4
+- Add ucrt64 target.
+
 * Thu Jan 20 2022 Fedora Release Engineering <releng@fedoraproject.org> - 9.0.0-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
 
