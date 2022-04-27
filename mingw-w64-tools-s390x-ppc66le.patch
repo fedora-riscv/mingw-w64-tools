@@ -1,0 +1,143 @@
+diff -rupN mingw-w64-v10.0.0/mingw-w64-tools/widl/include/basetsd.h mingw-w64-v10.0.0-new/mingw-w64-tools/widl/include/basetsd.h
+--- mingw-w64-v10.0.0/mingw-w64-tools/widl/include/basetsd.h	2022-04-03 17:08:58.000000000 +0200
++++ mingw-w64-v10.0.0-new/mingw-w64-tools/widl/include/basetsd.h	2022-04-27 15:04:23.665492767 +0200
+@@ -36,7 +36,7 @@ extern "C" {
+  * 64-bit.
+  */
+ 
+-#if (defined(__x86_64__) || defined(__powerpc64__) || defined(__aarch64__)) && !defined(_WIN64)
++#if (defined(__x86_64__) || defined(__powerpc64__) || defined(__aarch64__) || defined(__s390x__)) && !defined(_WIN64)
+ #define _WIN64
+ #endif
+ 
+@@ -295,6 +295,8 @@ typedef ULONG_PTR KAFFINITY, *PKAFFINITY
+ # define WORDS_BIGENDIAN
+ #elif defined(__MIPSEL__)
+ # undef  WORDS_BIGENDIAN
++#elif defined(__s390__)
++# define WORDS_BIGENDIAN
+ #elif !defined(RC_INVOKED) && !defined(__WIDL__) && !defined(__midl)
+ # error Unknown CPU architecture!
+ #endif
+diff -rupN mingw-w64-v10.0.0/mingw-w64-tools/widl/include/winnt.h mingw-w64-v10.0.0-new/mingw-w64-tools/widl/include/winnt.h
+--- mingw-w64-v10.0.0/mingw-w64-tools/widl/include/winnt.h	2022-04-03 17:08:58.000000000 +0200
++++ mingw-w64-v10.0.0-new/mingw-w64-tools/widl/include/winnt.h	2022-04-27 17:04:51.719200013 +0200
+@@ -1651,6 +1651,66 @@ typedef struct _KNONVOLATILE_CONTEXT_POI
+ 
+ #endif /* __aarch64__ */
+ 
++#ifdef __s390x__
++
++/*
++ * FIXME:
++ *
++ * There is no official CONTEXT structure defined for the S/390
++ * architecture, so I just made one up.
++ *
++ * This structure is completely dummy, made just to build widl.
++ *
++ */
++
++#define CONTEXT_S390X            0x10000000
++
++#define CONTEXT_CONTROL         (CONTEXT_S390X | 0x00000001)
++#define CONTEXT_FLOATING_POINT  (CONTEXT_S390X | 0x00000002)
++#define CONTEXT_INTEGER         (CONTEXT_S390X | 0x00000004)
++
++#define CONTEXT_FULL (CONTEXT_CONTROL | CONTEXT_FLOATING_POINT | CONTEXT_INTEGER)
++
++#define EXCEPTION_READ_FAULT    0
++#define EXCEPTION_WRITE_FAULT   1
++#define EXCEPTION_EXECUTE_FAULT 8
++
++typedef struct _CONTEXT
++{
++} CONTEXT, *PCONTEXT;
++
++#endif  /* __s390x__ */
++
++#ifdef __PPC64__
++
++/*
++ * FIXME:
++ *
++ * There is no official CONTEXT structure defined for the PPC64
++ * architecture, so I just made one up.
++ *
++ * This structure is completely dummy, made just to build widl.
++ *
++ */
++
++#define CONTEXT_PPC64            0x10000000
++
++#define CONTEXT_CONTROL         (CONTEXT_PPC64 | 0x00000001)
++#define CONTEXT_FLOATING_POINT  (CONTEXT_PPC64 | 0x00000002)
++#define CONTEXT_INTEGER         (CONTEXT_PPC64 | 0x00000004)
++
++#define CONTEXT_FULL (CONTEXT_CONTROL | CONTEXT_FLOATING_POINT | CONTEXT_INTEGER)
++
++#define EXCEPTION_READ_FAULT    0
++#define EXCEPTION_WRITE_FAULT   1
++#define EXCEPTION_EXECUTE_FAULT 8
++
++typedef struct _CONTEXT
++{
++} CONTEXT, *PCONTEXT;
++
++#endif  /* __PPC64__ */
++
+ #if !defined(CONTEXT_FULL) && !defined(RC_INVOKED)
+ #error You need to define a CONTEXT for your CPU
+ #endif
+diff -rupN mingw-w64-v10.0.0/mingw-w64-tools/widl/tools.h mingw-w64-v10.0.0-new/mingw-w64-tools/widl/tools.h
+--- mingw-w64-v10.0.0/mingw-w64-tools/widl/tools.h	2022-04-03 17:08:58.000000000 +0200
++++ mingw-w64-v10.0.0-new/mingw-w64-tools/widl/tools.h	2022-04-27 16:55:48.675315988 +0200
+@@ -79,7 +79,7 @@
+ 
+ struct target
+ {
+-    enum { CPU_i386, CPU_x86_64, CPU_ARM, CPU_ARM64 } cpu;
++    enum { CPU_i386, CPU_x86_64, CPU_ARM, CPU_ARM64, CPU_S390X, CPU_PPC64 } cpu;
+ 
+     enum
+     {
+@@ -383,6 +383,10 @@ static inline struct target get_default_
+     target.cpu = CPU_ARM;
+ #elif defined(__aarch64__)
+     target.cpu = CPU_ARM64;
++#elif defined(__s390x__)
++    target.cpu = CPU_S390X;
++#elif defined(__PPC64__)
++    target.cpu = CPU_PPC64;
+ #else
+ #error Unsupported CPU
+ #endif
+@@ -417,6 +421,8 @@ static inline unsigned int get_target_pt
+         [CPU_x86_64]    = 8,
+         [CPU_ARM]       = 4,
+         [CPU_ARM64]     = 8,
++        [CPU_S390X]     = 8,
++        [CPU_PPC64]     = 8,
+     };
+     return sizes[target.cpu];
+ }
+@@ -460,6 +466,8 @@ static inline int get_cpu_from_name( con
+         { "aarch64",   CPU_ARM64 },
+         { "arm64",     CPU_ARM64 },
+         { "arm",       CPU_ARM },
++        { "s390x",     CPU_S390X },
++        { "ppc64",     CPU_PPC64 }
+     };
+     unsigned int i;
+ 
+@@ -505,7 +513,9 @@ static inline const char *get_arch_dir(
+         [CPU_i386]   = "i386",
+         [CPU_x86_64] = "x86_64",
+         [CPU_ARM]    = "arm",
+-        [CPU_ARM64]  = "aarch64"
++        [CPU_ARM64]  = "aarch64",
++        [CPU_S390X]  = "s390x",
++        [CPU_PPC64]  = "ppc64",
+     };
+ 
+     if (!cpu_names[target.cpu]) return "";

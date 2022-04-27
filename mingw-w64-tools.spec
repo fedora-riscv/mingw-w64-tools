@@ -7,6 +7,8 @@ Name:           mingw-w64-tools
 Version:        10.0.0
 Release:        1%{?dist}
 Summary:        Supplementary tools which are part of the mingw-w64 toolchain
+# Fix build on s390x and ppc64le
+Patch0:         mingw-w64-tools-s390x-ppc66le.patch
 
 # http://sourceforge.net/mailarchive/forum.php?thread_name=5157C0FC.1010309%40users.sourceforge.net&forum_name=mingw-w64-public
 # The tools gendef and genidl are GPLv3+, widl is LGPLv2+
