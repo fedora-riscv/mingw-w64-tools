@@ -4,8 +4,8 @@
 #%%global branch trunk
 
 Name:           mingw-w64-tools
-Version:        9.0.0
-Release:        4%{?dist}
+Version:        10.0.0
+Release:        1%{?dist}
 Summary:        Supplementary tools which are part of the mingw-w64 toolchain
 
 # http://sourceforge.net/mailarchive/forum.php?thread_name=5157C0FC.1010309%40users.sourceforge.net&forum_name=mingw-w64-public
@@ -23,10 +23,8 @@ Source0:        http://sourceforge.net/code-snapshots/git/m/mi/mingw-w64/mingw-w
 %else
 Source0:        http://downloads.sourceforge.net/mingw-w64/mingw-w64-v%{version}.tar.bz2
 %endif
-# just to make widl to build on s390
-Patch0:         mingw-w64-tools-s390.patch
 
-BuildRequires: make
+BuildRequires:  make
 BuildRequires:  gcc
 BuildRequires:  mingw32-filesystem >= 133
 BuildRequires:  mingw64-filesystem >= 133
@@ -106,6 +104,9 @@ popd
 
 
 %changelog
+* Tue Apr 26 2022 Sandro Mani <manisandro@gmail.com> - 10.0.0-1
+- Update to 10.0.0
+
 * Wed Feb 23 2022 Marc-André Lureau <marcandre.lureau@redhat.com> - 9.0.0-4
 - Add ucrt64 target.
 
