@@ -5,7 +5,7 @@
 
 Name:           mingw-w64-tools
 Version:        10.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Supplementary tools which are part of the mingw-w64 toolchain
 # Fix build on s390x and ppc64le
 Patch0:         mingw-w64-tools-s390x-ppc66le.patch
@@ -106,6 +106,9 @@ popd
 
 
 %changelog
+* Thu Jul 21 2022 Fedora Release Engineering <releng@fedoraproject.org> - 10.0.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_37_Mass_Rebuild
+
 * Tue Apr 26 2022 Sandro Mani <manisandro@gmail.com> - 10.0.0-1
 - Update to 10.0.0
 
