@@ -5,7 +5,7 @@
 
 Name:           mingw-w64-tools
 Version:        10.0.0
-Release:        2%{?dist}
+Release:        2.rv64%{?dist}
 Summary:        Supplementary tools which are part of the mingw-w64 toolchain
 # Fix build on s390x and ppc64le
 Patch0:         mingw-w64-tools-s390x-ppc66le.patch
@@ -25,6 +25,10 @@ Source0:        http://sourceforge.net/code-snapshots/git/m/mi/mingw-w64/mingw-w
 %else
 Source0:        http://downloads.sourceforge.net/mingw-w64/mingw-w64-v%{version}.tar.bz2
 %endif
+
+# Arch patechs from Debian: https://salsa.debian.org/mingw-w64-team/mingw-w64/-/tree/c30ab13c881d6455b8685112fc5d3da647e0c1de/debian/patches
+# using to support riscv64, patch mingw-w64-tools-s390x-ppc66le.patch revoked included in this patch.
+Source1:        arch-patches-from-debian.patch
 
 BuildRequires:  make
 BuildRequires:  gcc
@@ -49,6 +53,9 @@ unzip %{S:0}
 %autosetup -p1 -n mingw-w64-v%{version}
 %endif
 
+%ifarch riscv64
+/usr/bin/patch -p1 < %{SOURCE1}
+%endif
 
 %build
 pushd mingw-w64-tools
@@ -106,6 +113,9 @@ popd
 
 
 %changelog
+* Sat Feb 04 2023 Liu Yang <Yang.Liu.sn@gmail.com> - 10.0.0-2.rv64
+- Using patch from Debian to support riscv64.
+
 * Thu Jul 21 2022 Fedora Release Engineering <releng@fedoraproject.org> - 10.0.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_37_Mass_Rebuild
 
