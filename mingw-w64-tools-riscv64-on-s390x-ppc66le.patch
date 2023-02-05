@@ -1,0 +1,108 @@
+diff '--color=auto' -Nru mingw-w64-v10.0.0/mingw-w64-tools/widl/include/basetsd.h mingw-w64-v10.0.0-riscv64/mingw-w64-tools/widl/include/basetsd.h
+--- mingw-w64-v10.0.0/mingw-w64-tools/widl/include/basetsd.h	2023-02-05 19:30:29.125932340 +0800
++++ mingw-w64-v10.0.0-riscv64/mingw-w64-tools/widl/include/basetsd.h	2023-02-05 19:35:49.722988386 +0800
+@@ -36,7 +36,7 @@
+  * 64-bit.
+  */
+ 
+-#if (defined(__x86_64__) || defined(__powerpc64__) || defined(__aarch64__) || defined(__s390x__)) && !defined(_WIN64)
++#if (defined(__x86_64__) || defined(__powerpc64__) || defined(__aarch64__) || defined(__s390x__) || (defined(__riscv) && (__riscv_xlen == 64))) && !defined(_WIN64)
+ #define _WIN64
+ #endif
+ 
+@@ -297,6 +297,8 @@
+ # undef  WORDS_BIGENDIAN
+ #elif defined(__s390__)
+ # define WORDS_BIGENDIAN
++#elif defined(__riscv) && (__riscv_xlen == 64)
++# undef  WORDS_BIGENDIAN
+ #elif !defined(RC_INVOKED) && !defined(__WIDL__) && !defined(__midl)
+ # error Unknown CPU architecture!
+ #endif
+diff '--color=auto' -Nru mingw-w64-v10.0.0/mingw-w64-tools/widl/include/winnt.h mingw-w64-v10.0.0-riscv64/mingw-w64-tools/widl/include/winnt.h
+--- mingw-w64-v10.0.0/mingw-w64-tools/widl/include/winnt.h	2023-02-05 19:30:29.125932340 +0800
++++ mingw-w64-v10.0.0-riscv64/mingw-w64-tools/widl/include/winnt.h	2023-02-05 19:35:15.039981961 +0800
+@@ -1711,6 +1711,36 @@
+ 
+ #endif  /* __PPC64__ */
+ 
++#if (defined(__riscv) && (__riscv_xlen == 64))
++
++/*
++ * FIXME:
++ *
++ * There is no official CONTEXT structure defined for the riscv64
++ * architecture, so I just made one up, too.
++ *
++ * This structure is completely dummy, made just to build widl.
++ *
++ */
++
++#define CONTEXT_RISCV64           0x10000000
++
++#define CONTEXT_CONTROL         (CONTEXT_RISCV64 | 0x00000001)
++#define CONTEXT_FLOATING_POINT  (CONTEXT_RISCV64 | 0x00000002)
++#define CONTEXT_INTEGER         (CONTEXT_RISCV64 | 0x00000004)
++
++#define CONTEXT_FULL (CONTEXT_CONTROL | CONTEXT_FLOATING_POINT | CONTEXT_INTEGER)
++
++#define EXCEPTION_READ_FAULT    0
++#define EXCEPTION_WRITE_FAULT   1
++#define EXCEPTION_EXECUTE_FAULT 8
++
++typedef struct _CONTEXT
++{
++} CONTEXT, *PCONTEXT;
++
++#endif  /* __riscv64 */
++
+ #if !defined(CONTEXT_FULL) && !defined(RC_INVOKED)
+ #error You need to define a CONTEXT for your CPU
+ #endif
+diff '--color=auto' -Nru mingw-w64-v10.0.0/mingw-w64-tools/widl/tools.h mingw-w64-v10.0.0-riscv64/mingw-w64-tools/widl/tools.h
+--- mingw-w64-v10.0.0/mingw-w64-tools/widl/tools.h	2023-02-05 19:30:29.126932340 +0800
++++ mingw-w64-v10.0.0-riscv64/mingw-w64-tools/widl/tools.h	2023-02-05 19:35:15.039981961 +0800
+@@ -79,7 +79,7 @@
+ 
+ struct target
+ {
+-    enum { CPU_i386, CPU_x86_64, CPU_ARM, CPU_ARM64, CPU_S390X, CPU_PPC64 } cpu;
++    enum { CPU_i386, CPU_x86_64, CPU_ARM, CPU_ARM64, CPU_S390X, CPU_PPC64, CPU_RISCV64 } cpu;
+ 
+     enum
+     {
+@@ -387,6 +387,8 @@
+     target.cpu = CPU_S390X;
+ #elif defined(__PPC64__)
+     target.cpu = CPU_PPC64;
++#elif (defined(__riscv) && (__riscv_xlen == 64))
++    target.cpu = CPU_RISCV64;
+ #else
+ #error Unsupported CPU
+ #endif
+@@ -423,6 +425,7 @@
+         [CPU_ARM64]     = 8,
+         [CPU_S390X]     = 8,
+         [CPU_PPC64]     = 8,
++        [CPU_RISCV64]   = 8,
+     };
+     return sizes[target.cpu];
+ }
+@@ -467,7 +470,8 @@
+         { "arm64",     CPU_ARM64 },
+         { "arm",       CPU_ARM },
+         { "s390x",     CPU_S390X },
+-        { "ppc64",     CPU_PPC64 }
++        { "ppc64",     CPU_PPC64 },
++        { "riscv64",   CPU_RISCV64 }
+     };
+     unsigned int i;
+ 
+@@ -516,6 +520,7 @@
+         [CPU_ARM64]  = "aarch64",
+         [CPU_S390X]  = "s390x",
+         [CPU_PPC64]  = "ppc64",
++        [CPU_RISCV64]= "riscv64"
+     };
+ 
+     if (!cpu_names[target.cpu]) return "";

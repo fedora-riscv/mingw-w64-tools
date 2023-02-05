@@ -23,12 +23,11 @@ URL:            http://mingw-w64.sourceforge.net/
 # spectool -g mingw-w64-tools.spec
 Source0:        http://sourceforge.net/code-snapshots/git/m/mi/mingw-w64/mingw-w64.git/mingw-w64-mingw-w64-%{snapshot_rev}.zip
 %else
-Source0:        http://downloads.sourceforge.net/mingw-w64/mingw-w64-v%{version}.tar.bz2
+Source0:        https://downloads.sourceforge.net/project/mingw-w64/mingw-w64/mingw-w64-release/mingw-w64-v%{version}.tar.bz2
 %endif
 
-# Arch patechs from Debian: https://salsa.debian.org/mingw-w64-team/mingw-w64/-/tree/c30ab13c881d6455b8685112fc5d3da647e0c1de/debian/patches
-# using to support riscv64, patch mingw-w64-tools-s390x-ppc66le.patch revoked included in this patch.
-Source1:        arch-patches-from-debian.patch
+Source1:         mingw-w64-tools-riscv64-on-s390x-ppc66le.patch
+
 
 BuildRequires:  make
 BuildRequires:  gcc
